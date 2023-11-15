@@ -27,6 +27,7 @@ public class SOAPUtils {
             SOAPMessage response = connection.call(generateMessage(command), endpoint);
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             response.writeTo(out);
+            log.info("SOAP Original Response {}", out.toString());
             return out.toString();
         } catch (MalformedURLException e) {
             log.error("Malformed Url ", e.getMessage());
@@ -56,7 +57,6 @@ public class SOAPUtils {
 
     protected String base64Authorization(){
         String userPass = String.format("%s:%s", InputData.getUsername_gm(),InputData.getPassword_gm());
-        log.info("Authorization {}", userPass);
         String basicAuth = Base64.getEncoder().encodeToString(userPass.getBytes());
         return basicAuth;
     }
