@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.print.attribute.standard.Media;
 
 @RestController
-@RequestMapping("/api/v1/api")
+@RequestMapping("/api/v1/soap")
 public class apiController {
 
     @PostMapping(value="/execute", produces = MediaType.APPLICATION_JSON_VALUE)

@@ -1,8 +1,7 @@
 package cl.vk.api.wow.service.utils;
 
 import cl.vk.api.wow.configuration.input.InputData;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.xml.soap.*;
 import java.io.ByteArrayInputStream;
@@ -13,16 +12,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Base64;
 
+@Slf4j
 public class SOAPUtils {
-
-    Logger logger = LoggerFactory.getLogger(SOAPUtils.class);
     public String sendMessage(String command){
         return executeCommand(command);
     }
     private String executeCommand(String command){
 
         try{
-            logger.info("URL {}", InputData.getProtocol()+"://"+InputData.getIp()+":"+InputData.getPort());
+            log.info("URL {}", InputData.getProtocol()+"://"+InputData.getIp()+":"+InputData.getPort());
             URL endpoint = new URL(InputData.getProtocol()+"://"+InputData.getIp()+":"+InputData.getPort());
             SOAPConnectionFactory soapConnection = SOAPConnectionFactory.newInstance();
             SOAPConnection connection = soapConnection.createConnection();
@@ -31,11 +29,11 @@ public class SOAPUtils {
             response.writeTo(out);
             return out.toString();
         } catch (MalformedURLException e) {
-            logger.error("Malformed Url ", e.getMessage());
+            log.error("Malformed Url ", e.getMessage());
         } catch (SOAPException e) {
-            logger.error("SOAP Error ", e.getMessage());
+            log.error("SOAP Error ", e.getMessage());
         } catch (IOException e) {
-            logger.error("IOException ", e.getMessage());
+            log.error("IOException ", e.getMessage());
         }
         return null;
     }
@@ -49,16 +47,16 @@ public class SOAPUtils {
             message.saveChanges();
             return message;
         } catch (SOAPException e) {
-            logger.error("SOAP Error ", e.getMessage());
+            log.error("SOAP Error ", e.getMessage());
         } catch (IOException e) {
-            logger.error("IOException ", e.getMessage());
+            log.error("IOException ", e.getMessage());
         }
         return null;
     }
 
     protected String base64Authorization(){
         String userPass = String.format("%s:%s", InputData.getUsername_gm(),InputData.getPassword_gm());
-        logger.info("Authorization {}", userPass);
+        log.info("Authorization {}", userPass);
         String basicAuth = Base64.getEncoder().encodeToString(userPass.getBytes());
         return basicAuth;
     }

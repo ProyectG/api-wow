@@ -1,6 +1,7 @@
 package cl.vk.api.wow.configuration;
 
 import cl.vk.api.wow.configuration.input.InputData;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,12 +10,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+@Slf4j
 public class Configuration
 {
     final String CONFIG_FILE = "apiConfiguration.properties";
     static Properties properties;
-    Logger logger = LoggerFactory.getLogger(Configuration.class);
-
     public Configuration(){
         loadProperties();
     }
@@ -30,8 +30,7 @@ public class Configuration
             InputData.setPassword_gm( properties.getProperty("api.passgm"));
             InputData.setSoap(properties.getProperty("api.soap"));
         } catch (IOException e) {
-            logger.error("IOException, the file doesn't exist. Create de file apiConfiguration.properties");
+            log.error("IOException, the file doesn't exist. Create de file apiConfiguration.properties");
         }
     }
-
 }
